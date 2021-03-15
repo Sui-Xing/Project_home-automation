@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head >
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>能源监控管理平台</title>
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="javascripts/layer-v3.1.1/layer/layer.js"></script>
+<script src="javascripts/layui-v2.3.0/layui/layui.js"></script>
+<script src="javascripts/echarts.min.js"></script>
+<link href="javascripts/layui-v2.3.0/layui/css/layui.css" rel="stylesheet">
+<!--定义全局样式-->
+<style>
+.left-icon{
+position:fixed;
+width:20px;
+height:131px;
+top:40%;
+bottom:40%;
+left:0;
+}
+#mobile-menu{
+position: fixed;
+top:5%;
+left:20px;
+width:255px;
+height:100%;
+/*background-color: rgba(0,0,0,0.7);*/
+z-index:9999;
+}
+.mobile-nav ul li a{
+color:#fff;
+cursor:pointer;
+}
+.show-nav{
+transform:translateX(0);
+}
+.hide-nav{
+transform:translateX(-275px);
+}
+.main{
+
+position:fixed;
+top:100px;
+width:1000px;
+    height:700px;
+left:370px;
+}
+.circle1{
+margin-left:60px;
+margin-top:10px;
+width:125px;
+height:125px;
+background-color:rgba(21,143,56,0.5);
+border-radius: 50%;
+
+}
+.userinfo{
+width:250px;
+height:175px;
+position: absolute;
+top:2%;
+right:2%;
+background-color: rgba(130,130,130,0.5);
+border-radius: 30px;
+}
+.photo{
+width:90px;
+height:110px;
+margin-top:15px;
+margin-left:15px;
+background-color: #00F7DE;
+}
+.shenfen{
+position:absolute;
+width:120px;
+height:40px;
+top:25px;
+right:18px;
+/*background-color: #00F7DE;*/
+font-size: 20px;
+color:#fff;
+line-height:40px;
+}
+.username{
+position: absolute;
+width:120px;
+height:40px;
+top:75px;
+right:18px;
+/*background-color: #01AAED;*/
+font-size: 20px;
+color:#fff;
+line-height: 40px;
+}
+.edit{
+position: absolute;
+width:40px;
+height:40px;
+top:130px;
+left:72px;
+/*background-color: #2D93CA;*/
+border-radius: 50%;
+}
+.zhuxiao{
+position: absolute;
+width:40px;
+height:40px;
+top:130px;
+left:142px;
+/*background-color: #2D93CA;*/
+border-radius: 50%;
+}
+/*.framemain{*/
+/*width:630px;*/
+/*height:500px;*/
+/*position:fixed;*/
+/*top:21%;*/
+/*right:20%;*/
+/*left:27.5%;*/
+/*!*background-color: #000;*!*/
+/*}*/
+.zhuxiaocircle {
+position: fixed;
+width: 300px;
+height:300px;
+top: 31%;
+left: 38%;
+border-radius: 50%;
+/*background-color: rgba(21,143,56,0.7);*/
+background-image: url("images/liumangxing1.png");
+background-size: 300px 300px;
+}
+
+
+    @media screen and (max-width:1200px){
+        .userinfo{
+            display:none;
+}
+    @media screen and (max-width:800px){
+        .main{
+            display:none;
+        }
+}
+
+</style>
+</head>
+
+<body  class="main1" background="images/back.jpg" style="background-attachment: fixed; background-size:100% 100%;background-repeat:no-repeat">
+<!--定义左侧的六个圆圈-->
+
+<div id="mobile-menu" class="mobile-nav">
+<div class="circle1" id="circle11" >
+<a style="text-decoration: none" onclick="wendujiance()">
+<i class="layui-icon layui-icon-friends" style="font-size:70px;margin-left:27px;margin-top:10px;color:#fff;" ></i>
+<p style="margin-left:34px;margin-top:15px;color:#fff;">实时监控</p>
+</a>
+</div>
+<div class="circle1" id="circle12"><a href="#" style="text-decoration: none">
+<i class="layui-icon layui-icon-user" style="font-size:70px;margin-left:27px;margin-top:10px;color:#fff;"></i>
+<p style="margin-left:34px;margin-top:15px;color:#fff;">用户管理</p>
+</a>
+</div>
+<div class="circle1" id="circle13"><a href="#" style="text-decoration: none">
+<i class="layui-icon layui-icon-add-circle" style="font-size:70px;margin-left:27px;margin-top:10px;color:#fff;"></i>
+<p style="margin-left:34px;margin-top:15px;color:#fff;">添加设备</p>
+</a>
+</div>
+<div class="circle1" id="circle14"><a href="#" style="text-decoration: none">
+<i class="layui-icon layui-icon-form" style="font-size:70px;margin-left:27px;margin-top:10px;color:#fff;"></i>
+<p style="margin-left:34px;margin-top:15px;color:#fff;">数据导出</p>
+</a>
+</div>
+<div class="circle1" id="circle15"><a href="#" style="text-decoration: none">
+<i class="layui-icon layui-icon-search" style="font-size:70px;margin-left:27px;margin-top:10px;color:#fff;"></i>
+<p style="margin-left:34px;margin-top:15px;color:#fff;">数据查询</p>
+</a>
+</div>
+<div class="circle1" id="circle16"><a href="#" style="text-decoration: none">
+<i class="layui-icon layui-icon-notice" style="font-size:70px;margin-left:27px;margin-top:10px;color:#fff;"></i>
+<p style="margin-left:34px;margin-top:15px;color:#fff;">消息通知</p>
+</a>
+</div>
+</div>
+<!--定义左侧的小按钮-->
+<div class="nav-btn">
+<a href="#" class="mobile-nav-taggle" id="mobile-nav-taggle">
+<img id="left-icon" class="left-icon" src="images/left_button.png ">
+</a>
+</div>
+<!--定义中间的背景图片-->
+<div class="main">
+<!--<div>-->
+<!--<i id="cancelall" class="layui-icon layui-icon-close" style="font-size:45px;position:fixed;top:200px;left:200px;width:800px;height:500px;color:#fff;cursor:pointer;"></i>-->
+<!--</div>-->
+<img style="width:100%;height:100%;" src="images/video_bg.png">
+</div>
+<!--&lt;!&ndash;定义悬浮位置&ndash;&gt;-->
+<!--<div class="framemain">-->
+<!--<iframe id="userinfo" style="position:fixed;top:200px;left:200px;width:800px;height:500px;" frameborder="0" src=""></iframe>-->
+<!--</div>-->
+<!--定义右上角的用户框-->
+<div class="userinfo">
+<div class="photo">
+<img src="images/back.jpg" style="width:90px;height:110px;">
+</div>
+<div class="shenfen">
+<p>身份：管理员</p>
+</div>
+<div class="username">
+<p>姓名：TJU</p>
+</div>
+<div class="edit">
+<i id="showuserinfo" class="layui-icon layui-icon-edit" style="font-size:40px;color:#fff;cursor:pointer;" ></i>
+</div>
+<div id="zhuxiaoanniu" class="zhuxiao">
+<i class="layui-icon layui-icon-close-fill" style="font-size:40px;color:#fff;cursor:pointer;"></i>
+</div>
+</div>
+<!--定义登出按钮-->
+<div id="logout">
+</div>
+
+</body>

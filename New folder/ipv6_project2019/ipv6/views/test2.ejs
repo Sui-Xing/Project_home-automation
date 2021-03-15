@@ -1,0 +1,641 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" >
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>智慧家居应用系统</title>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="javascripts/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <link src="javascripts/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="javascripts/layer-v3.1.1/layer/layer.js"></script>
+    <script src="javascripts/layui-v2.4.5/layui/layui.js"></script>
+    <link href="javascripts/layui-v2.4.5/layui/css/layui.css" rel="stylesheet">
+    <script src="javascripts/echarts.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.14.1/dist/bootstrap-table.min.css">
+    <script src="https://unpkg.com/bootstrap-table@1.14.1/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.14.1/dist/locale/bootstrap-table-zh-CN.min.js"></script> -->
+
+    <style>
+
+        .header{
+            background-color: rgba(0,0,0,0.5);
+            position:fixed;
+            top:5%;
+            width:100%;
+            height:13%;
+            text-align: center;
+            font-size:5.2em;
+            color:#fff;
+        }
+        .returntohome{
+            background-color: rgba(0,0,0,0.7);
+            position:fixed;
+            top:43%;
+            left:3%;
+            width:8%;
+            height:16%;
+            text-align: center;
+            font-size:1.8em;
+            color:#fff;
+            border-radius:50%;
+
+        }
+        .dataSelect{
+          /* background-color: rgba(0,0,0,0.5); */
+          position:absolute;
+          top:19%;
+          left:35%;
+          width:40%;
+          height:4%;
+          text-align: center;
+        }
+        .dataappear-Screen{
+            background-color: rgba(0,0,0,0.7);
+            position:absolute;
+            top:27%;
+            left:19%;
+            width:40%;
+            height:64%;
+            text-align: center;
+
+
+        }
+
+        .dataBall1{
+          background-color: rgba(0,0,0,0.7);
+          position:absolute;
+          top:27%;
+          left:59.5%;
+          width:20%;
+          height:40%;
+          text-align: center;
+        }
+        .dataBall2{
+          background-color: rgba(0,0,0,0.7);
+          position:absolute;
+          top:27%;
+          left:80%;
+          width:19.5%;
+          height:40%;
+          text-align: center;
+        }
+        .dataBall_analyse{
+          background-color: rgba(0,0,0,0.7);
+          position:absolute;
+          top:68.5%;
+          right:2%;
+          width:37%;
+          height:22.5%;
+          text-align: center;
+        }
+        #buttonsmall1{
+            background-color: rgba(0,0,0,0.7);
+            position:fixed;
+            top:24%;
+            left:12%;
+            width:6%;
+            height:12%;
+            text-align: center;
+            font-size:1.8em;
+            color:#fff;
+            border-radius:50%;
+        }
+        #buttonsmall2{
+            background-color: rgba(0,0,0,0.7);
+            position:fixed;
+            top:40%;
+            left:12%;
+            width:6%;
+            height:12%;
+            text-align: center;
+            font-size:1.8em;
+            color:#fff;
+            border-radius:50%;
+        }
+        #buttonsmall3{
+            background-color: rgba(0,0,0,0.7);
+            position:fixed;
+            top:56%;
+            left:12%;
+            width:6%;
+            height:12%;
+            text-align: center;
+            font-size:1.8em;
+            color:#fff;
+            border-radius:50%;
+        }
+        #buttonsmall4{
+            background-color: rgba(20,0,0,0.7);
+            position:fixed;
+            top:72%;
+            left:12%;
+            width:6%;
+            height:12%;
+            text-align: center;
+            font-size:1.8em;
+            color:#fff;
+            border-radius:50%;
+        }
+        /* #dropdown1{
+          position:fixed;
+          left: 30%;
+        }
+        #dropdown2{
+          position:fixed;
+          left: 40%;
+        } */
+        .peizhixuanze{
+          background-color: rgba(100,205,50,1);
+          position:fixed;
+          top:18.5%;
+          left:33%;
+          width:4%;
+          height:8%;
+          text-align: center;
+          font-size:1.5em;
+          color:#eee;
+          border-radius:50%;
+          line-height: 70px;
+        }
+        .greenline{
+          position:fixed;
+          top:17.7%;
+          left:35%;
+          width:40%;
+          height:1%;
+          background-color: rgba(100,205,50,1);
+
+        }
+
+    </style>
+</head>
+
+<body class="main" background="images/back.jpg" style="background-attachment: fixed; background-size:100% 100%;background-repeat:no-repeat">
+<!--定义头部标题-->
+<div>
+    <p class="header">智慧家居应用系统</p>
+</div>
+
+<form action="/test" method="post">
+    <button class="returntohome">
+        返回首页
+    </button>
+</form>
+<form action="/tongjibiao" method="post">
+    <button id="buttonsmall1">
+        统计表
+    </button>
+</form>
+<form action="/zhifangtu" method="post">
+    <button id="buttonsmall2">
+        直方图
+    </button>
+</form>
+<form action="/bingzhuangtu" method="post">
+    <button id="buttonsmall3">
+        饼状图
+    </button>
+</form>
+<form action="/shujufenxi" method="post">
+    <button id="buttonsmall4">
+        数据分析
+    </button>
+</form>
+<div id="bigScreen"class="dataappear-Screen">
+<table  id="screenTable" style="color:white;font-size:1.4em" border=1 width=752>
+
+</table>
+</div>
+
+<div id="" class="dataSelect">
+
+  <ul class="layui-nav layui-bg-cyan">
+
+    <li class="layui-nav-item" >
+      <a href="javascript:;">端口选择</a>
+      <dl class="layui-nav-child">
+        <dd><a href="">端口1</a></dd>
+        <dd><a href="">端口2</a></dd>
+        <dd><a href="">端口3</a></dd>
+      </dl>
+    </li>
+    <li class="layui-nav-item" >
+      <a href="javascript:;">传感器选择</a>
+      <dl class="layui-nav-child">
+        <dd><a href="">温度传感器</a></dd>
+        <dd><a href="">湿度传感器</a></dd>
+        <dd><a href="">压力传感器</a></dd>
+      </dl>
+    </li>
+  </ul>
+
+  <div class="peizhixuanze">
+    <p >配置</p>
+  </div>
+<hr class="greenline"/>
+<div class="layui-form" style="position:fixed;left:62%;top:20%">
+<div class="layui-form-item">
+  <div class="layui-inline">
+     <div class="layui-input-inline">
+       <input type="text" class="layui-input" id="test10" placeholder="点击此框选择年月日时范围">
+     </div>
+   </div>
+</div>
+</div>
+
+</div>
+
+
+
+
+<div id="dataBall1"class="dataBall1">
+
+</div>
+<div id="dataBall2"class="dataBall2">
+
+</div>
+
+<div id="analyse"class="dataBall_analyse">
+<p id="analyse1" style="color:#fff;font-size:2em"><span id="analyse001"></span><span id="analyse002"></span><span id="analyse003"></span></p>
+<p id="analyse2" style="color:#fff;font-size:2em"><span id="analyse011"></span><span id="analyse012"></span><span id="analyse013"></span></p>
+<p id="analyse3" style="color:#fff;font-size:2em"><span id="analyse021"></span><span id="analyse022"></span><span id="analyse023"></span></p>
+<p id="analyse4" style="color:#fff;font-size:2em"><span id="analyse031"></span><span id="analyse032"></span><span id="analyse033"></span></p>
+<p id="analyse5" style="color:#fff;font-size:2.7em"><span id="analyse051"></span><span id="analyse052" style="font-size:1.5em"></span></p>
+</div>
+</body>
+
+<!-- ******************以下使用ajax显示表格 -->
+<script type="text/javascript">
+$("#buttonsmall1").click(function() {
+$.ajax({
+    url : "/datashow/tongjibiao",
+    dataType : "json",
+    type : "post",
+    async : true,
+    success : function(data) {
+
+document.getElementById("bigScreen").style.backgroundColor = '#2c343c';
+document.getElementById('screenTable').innerHTML += "<thead><tr><th>数据编号</th><th>信号：温度</th><th>端口</th><th>数据接收时间</th><th>等级评定</th></tr></thead>";
+document.getElementById('screenTable').innerHTML +="<tr><td>001</td><td>24℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>安全</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>002</td><td>25℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>安全</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>003</td><td>26℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>安全</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>004</td><td>27℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>安全</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>005</td><td>28℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>安全</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>006</td><td>29℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>安全</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>007</td><td>30℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>警告</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>008</td><td>31℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>警告</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>009</td><td>32℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>警告</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>010</td><td>33℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>警告</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>011</td><td>34℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>警告</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>012</td><td>35℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>警告</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>013</td><td>36℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>警告</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>014</td><td>37℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>警告</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>015</td><td>38℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>危险</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>016</td><td>38℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>危险</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>017</td><td>39℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>危险</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>018</td><td>40℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>危险</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>019</td><td>41℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>危险</td></tr>"
+document.getElementById('screenTable').innerHTML +="<tr><td>020</td><td>42℃</td><td>PORT1</td><td>2019-03-07 11:06:58</td><td>危险</td></tr>"
+
+    },
+    error: function(err) {
+        alert(err);
+    },
+});
+    return false;
+
+})
+</script>
+
+
+<!-- *****************以下使用ajax显示直方图 -->
+<script type="text/javascript">
+    $("#buttonsmall2").click(function() {
+
+        $.ajax({
+            url : "/datashow/zhifangtu",
+            dataType : "json",
+            type : "post",
+            async : true,
+            success : function(data) {
+
+              var myChart = echarts.init(document.getElementById('dataBall1'));
+
+              var option = {
+
+                backgroundColor: '#2c343c',
+                xAxis: [{
+                  axisLabel:{interval:0,textStyle:{color:"#fff"}},
+
+                  axisLine:{
+                    lineStyle : {          // 直线指示器样式设置
+                         color: '#fff',
+                         width: 2,
+                         type: 'solid'
+                     }
+                  },
+
+                  type: 'category',
+                  data: ['总统计', '安全', '被警告', '危险']
+
+                }],
+
+
+
+                yAxis: [{
+                  type: 'value',
+                  axisLine:{
+                    lineStyle : {          // 直线指示器样式设置
+                         color: '#fff',
+                         width: 2,
+                         type: 'solid'
+                     }
+                  },
+                }],
+                series: [{
+                  itemStyle: {
+							normal: {
+								label: {
+									show: true, //开启显示
+									position: 'top', //在上方显示
+									textStyle: { //数值样式
+										color: 'rgb(0,206,209)',
+										fontSize: 25
+									}
+								}
+							}
+						},
+
+
+                  data: [ ],
+                  type: 'bar'
+                }]
+              };
+
+              var totalSUM = 0;
+              var safeSUM = 0;
+              var warningSUM = 0;
+              var dangerSUM = 0;
+              var arrLight = data.listTem.map(Number);
+              console.log(arrLight);
+              for(var m=0;m<data.listTem.length;m++){
+                 if(totalSUM<data.listTem.length){
+
+                   if(arrLight[totalSUM]<30)
+                                      {
+                                        safeSUM++;
+                                      }
+                   if(arrLight[totalSUM]>=30&&arrLight[totalSUM]<38)
+                                        {
+                                        warningSUM++;
+                                      }
+                    if(arrLight[totalSUM]>=38)
+                                      {
+                                        dangerSUM++;
+                                       }
+
+
+                    totalSUM++;
+                  }
+                }
+
+              option.series[0].data[0] = totalSUM ;
+              option.series[0].data[1] = safeSUM;
+              option.series[0].data[2] = warningSUM;
+              option.series[0].data[3] = dangerSUM;
+              myChart.setOption(option, true);
+
+
+
+            },
+            error: function(err) {
+                alert(err);
+            }
+        });
+            return false;
+    })
+
+</script>
+
+
+<!-- *****************以下使用ajax显示饼状图 -->
+<script type="text/javascript">
+    $("#buttonsmall3").click(function() {
+
+        $.ajax({
+            url : "/datashow/bingzhuangtu",
+            dataType : "json",
+            type : "post",
+            async : true,
+            success : function(data) {
+
+              var myChart = echarts.init(document.getElementById('dataBall2'));
+
+              var option = {
+                backgroundColor: '#2c343c',
+                tooltip : {
+       trigger: 'item',
+       formatter: "{a} <br/>{b} : {c} ({d}%)"
+   },
+     visualMap: {
+         show: false,
+         min: 0,
+         max: 10,
+         inRange: {
+             colorLightness: [0, 0.5]
+         },
+         color:['#666666','#cccccc']
+     },
+     series : [
+         {
+             name:'监测比例',
+             type:'pie',
+             radius : '55%',
+             center: ['50%', '50%'],
+             data:[
+                 {value:" ", name:'安全次数'},
+                 {value:" ", name:'被警告次数'},
+                 {value:" ", name:'危险次数'},
+
+             ].sort(function (a, b) { return a.value - b.value; }),
+             roseType: 'radius',
+             label: {
+                 normal: {
+                     textStyle: {
+                         color: 'rgba(255, 255, 255, 0.3)'
+                     }
+                 }
+             },
+             labelLine: {
+                 normal: {
+                     lineStyle: {
+                         color: 'rgba(255, 255, 255, 0.3)'
+                     },
+                     smooth: 0.2,
+                     length: 10,
+                     length2: 20
+                 }
+             },
+             itemStyle: {
+                 normal: {
+                     color: '#ffff00',
+                     shadowBlur: 20,
+                     shadowColor: 'rgba(100, 100, 100, 0.5)'
+                 }
+             },
+
+             animationType: 'scale',
+             animationEasing: 'elasticOut',
+             animationDelay: function (idx) {
+                 return Math.random() * 200;
+             }
+         }
+     ]
+              };
+
+              var totalSUM = 0;
+              var safeSUM = 0;
+              var warningSUM = 0;
+              var dangerSUM = 0;
+              var arrLight = data.listTem.map(Number);
+              console.log(arrLight);
+              for(var m=0;m<data.listTem.length;m++){
+                 if(totalSUM<data.listTem.length){
+
+                   if(arrLight[totalSUM]<30)
+                                      {
+                                        safeSUM++;
+                                      }
+                   if(arrLight[totalSUM]>=30&&arrLight[totalSUM]<38)
+                                        {
+                                        warningSUM++;
+                                      }
+                    if(arrLight[totalSUM]>=38)
+                                      {
+                                        dangerSUM++;
+                                       }
+
+
+                    totalSUM++;
+                  }
+                }
+
+
+              option.series[0].data[0].value = safeSUM;
+              option.series[0].data[1].value = warningSUM;
+              option.series[0].data[2].value = dangerSUM;
+              myChart.setOption(option, true);
+
+
+            },
+            error: function(err) {
+                alert(err);
+            }
+        });
+            return false;
+    })
+
+</script>
+
+
+<!-- *****************以下使用ajax显示数据分析-->
+<script type="text/javascript">
+    $("#buttonsmall4").click(function() {
+
+        $.ajax({
+            url : "/datashow/shujufenxi",
+            dataType : "json",
+            type : "post",
+            async : true,
+            success : function(data) {
+
+              var totalSUM = 0;
+              var safeSUM = 0;
+              var warningSUM = 0;
+              var dangerSUM = 0;
+              var arrLight = data.listTem.map(Number);
+              console.log(arrLight);
+              for(var m=0;m<data.listTem.length;m++){
+                 if(totalSUM<data.listTem.length){
+
+                   if(arrLight[totalSUM]<30)
+                                      {
+                                        safeSUM++;
+                                      }
+                   if(arrLight[totalSUM]>=30&&arrLight[totalSUM]<38)
+                                        {
+                                        warningSUM++;
+                                      }
+                    if(arrLight[totalSUM]>=38)
+                                      {
+                                        dangerSUM++;
+                                       }
+
+
+                    totalSUM++;
+                  }
+                }
+                document.getElementById("analyse").style.backgroundColor = '#2c343c';
+
+                document.getElementById("analyse001").innerHTML = "一共统计了";
+                document.getElementById("analyse002").innerHTML = totalSUM;
+                document.getElementById("analyse002").style.color = '#00ffff';
+                document.getElementById("analyse003").innerHTML = "次数据";
+
+                document.getElementById("analyse011").innerHTML = "安全次数为";
+                document.getElementById("analyse012").innerHTML = safeSUM;
+                document.getElementById("analyse012").style.color = '#00ff00';
+                document.getElementById("analyse013").innerHTML = "次";
+
+                document.getElementById("analyse021").innerHTML = "被警告次数为";
+                document.getElementById("analyse022").innerHTML = warningSUM;
+                document.getElementById("analyse022").style.color = '#ffcc00';
+                document.getElementById("analyse023").innerHTML = "次";
+
+                document.getElementById("analyse031").innerHTML = "危险次数为";
+                document.getElementById("analyse032").innerHTML = dangerSUM;
+                document.getElementById("analyse032").style.color = '#ff0000';
+                document.getElementById("analyse033").innerHTML = "次";
+
+
+                document.getElementById("analyse051").innerHTML = "最终评定等级为：";
+                document.getElementById("analyse052").innerHTML = "C";
+                document.getElementById("analyse052").style.color = '#ffff00';
+            },
+            error: function(err) {
+                alert(err);
+            }
+        });
+            return false;
+    })
+
+</script>
+
+
+<!-- *****************以下引入了layUI的导航效果 -->
+<script>
+layui.use('element', function(){
+  var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+  //监听导航点击
+  element.on('nav(demo)', function(elem){
+    //console.log(elem)
+    layer.msg(elem.text());
+  });
+});
+</script>
+
+
+<!-- *****************以下引入了layUI的时间范围选择效果 -->
+<script>
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+  laydate.render({
+    elem: '#test10'
+      ,type: 'datetime'
+      ,range: true
+  });
+});
+</script>
+</html>
